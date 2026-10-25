@@ -1,4 +1,4 @@
 apiVersion: v2
 name: shop-app
 description: 公司共用的服務 chart
-version: 1.0.0            # ⭐ chart 本身的版本，改模板就要 +1
+version: 1.1.0            # ⭐ chart 本身的版本，改模板就要 +1
