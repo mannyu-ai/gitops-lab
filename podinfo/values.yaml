@@ -2,4 +2,4 @@ replicaCount: 2
 image:
   tag: 6.15.0              # ⭐ CI 平常就是改這一行
 ui:
-  message: "v1 from git"   # podinfo 會把這段文字放在回應裡，方便確認版本
+  message: "v2 from git"   # podinfo 會把這段文字放在回應裡，方便確認版本
