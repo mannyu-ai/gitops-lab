@@ -1,0 +1,5 @@
+message: "payment service"
+autoscaling:
+  enabled: true            # ⭐ 只有 payment 開自動擴充
+  minReplicas: 2
+  maxReplicas: 4

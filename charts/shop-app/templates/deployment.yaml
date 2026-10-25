@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}               # Release 名稱 = 服務名稱（order、payment……）
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}    # ⭐ 開了自動擴充就不輸出，交給 HPA
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: app
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.port }}
+        env:
+        - name: PODINFO_UI_MESSAGE        # podinfo 用這個環境變數設定回應的 message
+          value: {{ .Values.message | quote }}
+        readinessProbe:                   # 7B 課：readiness
+          httpGet:
+            path: /readyz
+            port: {{ .Values.port }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
